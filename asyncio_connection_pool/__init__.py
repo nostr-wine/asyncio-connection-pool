@@ -14,7 +14,7 @@ class ConnectionStrategy(ABC, Generic[Conn]):
         ...
 
     @abstractmethod
-    def connection_is_closed(self, conn: Conn) -> bool:
+    async def connection_is_closed(self, conn: Conn) -> bool:
         ...
 
     @abstractmethod
@@ -139,7 +139,7 @@ class ConnectionPool(Generic[Conn]):
         # Repeat until the connection we get is still open.
         while True:
             try:
-                if not self.strategy.connection_is_closed(conn):
+                if not await self.strategy.connection_is_closed(conn):
                     break
             except BaseException:
                 self.in_use -= 1
