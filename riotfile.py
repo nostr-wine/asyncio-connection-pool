@@ -25,7 +25,7 @@ venv = Venv(
             },
         ),
         Venv(
-            pkgs={"black": "==22.3.0"},
+            pkgs={"black": "==20.8b1"},
             venvs=[
                 Venv(
                     name="fmt",
