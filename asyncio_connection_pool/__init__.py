@@ -125,11 +125,11 @@ class ConnectionPool(Generic[Conn]):
             # having all of them time out and be cancelled, we'll burst to
             # higher max_size.
             self.currently_allocating += 1
-            return self._loop.create_task(await self._connection_maker())
+            return self._loop.create_task(self._connection_maker())
         else:
             # Return a Task that waits for the next connection to appear in the
             # queue.
-            return self._loop.create_task(await self._connection_waiter())
+            return self._loop.create_task(self._connection_waiter())
 
     @asynccontextmanager
     async def get_connection(self) -> AsyncIterator[Conn]:  # type: ignore
